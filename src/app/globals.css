@@ -54,6 +54,16 @@
   --animate-rippling: rippling var(--duration) ease-out;
   --animate-border-beam: border-beam calc(var(--duration) * 1s) infinite linear;
   --animate-grid: grid 15s linear infinite;
+  --animate-marquee: marquee var(--duration) linear infinite;
+
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(calc(-100% - var(--gap)));
+    }
+  }
 
   @keyframes shimmer-slide {
     to {

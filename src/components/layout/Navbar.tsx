@@ -7,11 +7,13 @@ import { motion, AnimatePresence, useScroll, useMotionValueEvent } from "motion/
 import { navVariant } from "@/lib/motion";
 import ScrambleHover from "@/components/ScrambleHover";
 import { cn } from "@/lib/utils";
+import { OFFER } from "@/lib/offerConfig";
 
 const NAV_LINKS = [
     { label: "Home", href: "/" },
     { label: "Our Gyms", href: "/locations" },
     { label: "Plans", href: "/membership" },
+    { label: "Gallery", href: "/gallery" },
     { label: "RS Cafe", href: "/cafe" },
 ];
 
@@ -42,19 +44,51 @@ export default function Navbar() {
 
     return (
         <>
-            <motion.nav variants={navVariant} animate={hidden ? "hidden" : "visible"} className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? "bg-[rgba(8,8,8,0.92)] backdrop-blur-xl" : "bg-transparent"}`} aria-label="Main navigation">
+            <motion.nav variants={navVariant} animate={hidden ? "hidden" : "visible"} className={`fixed left-0 right-0 z-50 transition-all duration-300 ${scrolled ? "bg-[rgba(8,8,8,0.92)] backdrop-blur-xl" : "bg-transparent"}`} style={{ top: "var(--strip-height, 0px)" }} aria-label="Main navigation">
                 <div className="section-container flex items-center justify-between h-[72px]">
-                    <Link href="/" onClick={() => setIsOpen(false)} className="flex items-center select-none gap-2">
-                        <Image src="/favicon.jpg" alt="RS Fitness Logo" width={32} height={32} className="rounded-full object-cover" />
-                        <span className="text-[22px] lg:text-[26px] text-[#F5F5F5] tracking-wide mt-1" style={{ fontFamily: "var(--font-bebas-neue)" }}>RS FITNESS</span>
+                    <Link href="/" onClick={() => setIsOpen(false)} className="flex items-center select-none">
+                        <Image src="/images/RSFitness-Logo.png" alt="RS Fitness Logo" width={180} height={60} className="object-contain h-[40px] w-auto" priority />
                     </Link>
                     <div className="hidden lg:flex items-center gap-8">
                         {NAV_LINKS.map((link) => {
                             const active = pathname === link.href || (pathname === "/" && link.href === "/");
+                            
+                            if (link.label === "Gallery") {
+                                return (
+                                    <div key={link.href} className="relative group flex items-center h-full py-6 -my-6">
+                                        <Link href={link.href} className={`relative text-[12px] uppercase tracking-[0.08em] transition-colors duration-150 ${active ? "text-[#F5F5F5]" : "text-[rgba(245,245,245,0.65)] hover:text-[#F5F5F5]"}`} style={{ fontFamily: "var(--font-dm-sans)" }}>
+                                            <div className="inline-flex items-center gap-1">
+                                                <ScrambleHover scrambleDuration={300}>{link.label}</ScrambleHover>
+                                                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="opacity-60"><path d="M6 9l6 6 6-6"/></svg>
+                                            </div>
+                                            {active && <motion.div layoutId="nav-indicator" className="absolute bottom-[20px] left-0 right-0 h-[2px] bg-[#2ECC52]" transition={{ duration: 0.25, ease: "easeInOut" }} />}
+                                        </Link>
+                                        <div className="absolute top-[80%] left-1/2 -translate-x-1/2 pt-4 w-44 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-[60]">
+                                            <div className="bg-[rgba(10,10,10,0.95)] backdrop-blur-md border border-[rgba(255,255,255,0.06)] rounded-[4px] shadow-2xl overflow-hidden py-1">
+                                                <Link href="/gallery?tab=hongasandra" className="block px-5 py-3 text-[11px] uppercase tracking-[0.08em] hover:bg-[rgba(255,255,255,0.05)] text-[rgba(245,245,245,0.7)] hover:text-[#2ECC52] transition-colors">Hongasandra</Link>
+                                                <Link href="/gallery?tab=akshayanagar" className="block px-5 py-3 text-[11px] uppercase tracking-[0.08em] hover:bg-[rgba(255,255,255,0.05)] text-[rgba(245,245,245,0.7)] hover:text-[#2ECC52] transition-colors">Akshayanagar</Link>
+                                                <Link href="/gallery?tab=rs-cafe" className="block px-5 py-3 text-[11px] uppercase tracking-[0.08em] hover:bg-[rgba(255,255,255,0.05)] text-[rgba(245,245,245,0.7)] hover:text-[#2ECC52] transition-colors border-t border-[rgba(255,255,255,0.04)]">RS Cafe</Link>
+                                            </div>
+                                        </div>
+                                    </div>
+                                );
+                            }
+
                             return (
-                                <Link key={link.href} href={link.href} className={`relative py-2 text-[12px] uppercase tracking-[0.08em] transition-colors duration-150 ${active ? "text-[#F5F5F5]" : "text-[rgba(245,245,245,0.65)] hover:text-[#F5F5F5]"}`} style={{ fontFamily: "var(--font-dm-sans)" }}>
-                                    <ScrambleHover scrambleDuration={300} className="inline-block">{link.label}</ScrambleHover>
-                                    {active && <motion.div layoutId="nav-indicator" className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#2ECC52]" transition={{ duration: 0.25, ease: "easeInOut" }} />}
+                                <Link key={link.href} href={link.href} className={`relative py-6 -my-6 text-[12px] uppercase tracking-[0.08em] transition-colors duration-150 ${active ? "text-[#F5F5F5]" : "text-[rgba(245,245,245,0.65)] hover:text-[#F5F5F5]"}`} style={{ fontFamily: "var(--font-dm-sans)" }}>
+                                    <div className="relative inline-block">
+                                        <ScrambleHover scrambleDuration={300} className="inline-block">{link.label}</ScrambleHover>
+                                        {link.label === "Plans" && !OFFER.isClosed && (
+                                            <span
+                                                className="absolute -top-1 -right-2.5 flex h-1.5 w-1.5"
+                                                aria-label="Special offer available"
+                                            >
+                                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#2ECC52] opacity-75" />
+                                                <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-[#2ECC52]" />
+                                            </span>
+                                        )}
+                                    </div>
+                                    {active && <motion.div layoutId="nav-indicator" className="absolute bottom-[20px] left-0 right-0 h-[2px] bg-[#2ECC52]" transition={{ duration: 0.25, ease: "easeInOut" }} />}
                                 </Link>
                             );
                         })}

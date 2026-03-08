@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import { motion } from "motion/react";
 import { BlurFade } from "@/components/ui/blur-fade";
 import { ShimmerButton } from "@/components/ui/shimmer-button";
@@ -20,7 +21,16 @@ const pillars = [
     },
 ];
 
-export default function RSCafe() {
+const cafePhotos = [
+    { src: "/images/rs-cafe/main.webp", alt: "RS Cafe Exterior", span: "col-span-2 row-span-2" },
+    { src: "/images/rs-cafe/1.webp", alt: "RS Cafe Interior 1", span: "" },
+    { src: "/images/rs-cafe/2.webp", alt: "RS Cafe Interior 2", span: "" },
+];
+
+import Link from "next/link";
+import { RippleButton } from "@/components/ui/ripple-button";
+
+export default function RSCafe({ isHomePage = false }: { isHomePage?: boolean }) {
     return (
         <section id="cafe" className="relative py-20 lg:py-28 grain-overlay" style={{ backgroundColor: "#080808" }}>
             <div className="absolute inset-0 opacity-[0.04]" style={{ background: "radial-gradient(ellipse at 30% 50%, rgba(46,204,82,0.15), transparent 70%)" }} />
@@ -30,6 +40,28 @@ export default function RSCafe() {
                     <h2 className="text-[clamp(38px,5vw,64px)] leading-[1.05] tracking-wide text-[#F5F5F5] mb-4" style={{ fontFamily: "var(--font-bebas-neue)" }}>RS CAFE</h2>
                     <BlurFade delay={0.15} inView><p className="text-[15px] lg:text-[17px] text-[rgba(245,245,245,0.55)] max-w-[520px] mx-auto">Located inside our Hongasandra branch. Eat what fuels you — right where you train.</p></BlurFade>
                 </div>
+
+                {/* Cafe Photo Grid */}
+                <BlurFade delay={0.1} inView>
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-12">
+                        {cafePhotos.map((photo, i) => (
+                            <div key={i} className={`relative overflow-hidden rounded-[2px] border border-[rgba(255,255,255,0.06)] group ${photo.span}`}>
+                                <div className="relative aspect-video w-full h-full min-h-[180px]">
+                                    <Image
+                                        src={photo.src}
+                                        alt={photo.alt}
+                                        fill
+                                        className="object-cover transition-transform duration-500 group-hover:scale-105"
+                                        sizes="(max-width: 768px) 100vw, 50vw"
+                                    />
+                                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </BlurFade>
+
+                {/* Menu & Offerings */}
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-8">
                     {pillars.map((p, i) => (
                         <BlurFade key={p.title} delay={i * 0.12} inView className={p.wide ? "lg:col-span-2" : ""}>
@@ -49,6 +81,46 @@ export default function RSCafe() {
                         </div>
                     </BlurFade>
                 </div>
+
+                {/* Menu Pages */}
+                <BlurFade delay={0.2} inView>
+                    <div className="mb-10">
+                        <h3 className="text-center text-[clamp(28px,4vw,42px)] tracking-wide text-[#F5F5F5] mb-6" style={{ fontFamily: "var(--font-bebas-neue)" }}>
+                            OUR <span className="text-[#2ECC52]">MENU</span>
+                        </h3>
+                        {isHomePage ? (
+                            <div className="flex justify-center">
+                                <Link href="/cafe">
+                                    <RippleButton className="h-[48px] px-8 text-[14px] font-semibold tracking-wider uppercase rounded-[2px] border-[#2ECC52] text-[#2ECC52] hover:bg-[#2ECC52] hover:text-[#080808] bg-transparent transition-all duration-200" rippleColor="#2ECC52" onClick={() => {}}>
+                                        VIEW FULL MENU
+                                    </RippleButton>
+                                </Link>
+                            </div>
+                        ) : (
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-4xl mx-auto">
+                                <div className="relative overflow-hidden rounded-[2px] border border-[rgba(255,255,255,0.06)] group">
+                                    <Image
+                                        src="/images/rs-cafe/menu1.webp"
+                                        alt="RS Cafe Menu Page 1"
+                                        width={800}
+                                        height={1100}
+                                        className="w-full h-auto object-contain transition-transform duration-500 group-hover:scale-[1.02]"
+                                    />
+                                </div>
+                                <div className="relative overflow-hidden rounded-[2px] border border-[rgba(255,255,255,0.06)] group">
+                                    <Image
+                                        src="/images/rs-cafe/menu2.webp"
+                                        alt="RS Cafe Menu Page 2"
+                                        width={800}
+                                        height={1100}
+                                        className="w-full h-auto object-contain transition-transform duration-500 group-hover:scale-[1.02]"
+                                    />
+                                </div>
+                            </div>
+                        )}
+                    </div>
+                </BlurFade>
+
                 <div className="text-center">
                     <ShimmerButton className="h-[44px] px-8 text-[14px] font-semibold tracking-wider uppercase rounded-[2px]" shimmerColor="#2ECC52" shimmerSize="0.08em" background="#2ECC52" onClick={() => window.open("https://maps.google.com/?q=RS+Fitness+Hongasandra+Bangalore", "_blank")}><span className="text-[#080808] font-semibold">Get Directions to Hongasandra →</span></ShimmerButton>
                 </div>
@@ -56,3 +128,4 @@ export default function RSCafe() {
         </section>
     );
 }
+

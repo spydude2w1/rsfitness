@@ -3,9 +3,12 @@
 import { useEffect, useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { useScroll, motion, useTransform } from "framer-motion";
+import Image from "next/image";
 import { AnimatedShinyText } from "@/components/ui/animated-shiny-text";
 import BlurText from "@/components/BlurText";
 import MagneticButton from "@/components/MagneticButton";
+import FoundingBadge from "@/components/ui/FoundingBadge";
+import OfferHeroPill from "@/components/ui/OfferHeroPill";
 
 export default function Hero() {
     const [mounted, setMounted] = useState(false);
@@ -55,18 +58,12 @@ export default function Hero() {
             className="relative w-full min-h-screen overflow-hidden lg:flex"
             style={{ backgroundColor: "#080808" }}
         >
-            <div className="absolute inset-0 z-0">
+            <FoundingBadge />
+            <div className="absolute inset-0 z-0 bg-[#080808] overflow-hidden">
                 <div
-                    className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-                    style={{ backgroundImage: "url('/images/hero-poster.jpg')" }}
+                    className="absolute inset-0 bg-cover bg-center bg-no-repeat blur-[2px] scale-105 brightness-95"
+                    style={{ backgroundImage: "url('/images/hero.png')" }}
                 />
-                <video
-                    autoPlay muted loop playsInline
-                    className="absolute inset-0 w-full h-full object-cover"
-                    aria-hidden="true"
-                >
-                    <source src="/videos/hero-desktop.mp4" type="video/mp4" />
-                </video>
             </div>
 
             <div
@@ -102,8 +99,26 @@ export default function Hero() {
             <div className="relative z-10 w-full h-full flex flex-col justify-center lg:justify-end lg:absolute lg:bottom-[12%] lg:left-0 lg:max-w-[660px] lg:pl-[clamp(32px,5vw,88px)] px-5 pt-[38vh] lg:pt-0 lg:px-0 text-center lg:text-left">
                 {mounted && (
                     <>
+                        {isMobile && (
+                            <motion.div
+                                initial={{ opacity: 0, scale: 0.9 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                transition={{ delay: 0.2, duration: 0.8, ease: "easeOut" }}
+                                className="flex justify-center flex-col items-center w-full mb-14 z-[15]"
+                            >
+                                <Image 
+                                    src="/images/RSFitness-Logo.png" 
+                                    alt="RS Fitness Logo" 
+                                    width={400} 
+                                    height={120} 
+                                    className="object-contain w-[240px] h-auto drop-shadow-[0_0_30px_rgba(255,255,255,0.1)]"
+                                    priority
+                                />
+                            </motion.div>
+                        )}
+
                         <motion.div
-                            className="flex items-center justify-center lg:justify-start gap-[10px] mb-5 lg:pl-1"
+                            className="flex items-center justify-center lg:justify-start gap-[10px] lg:gap-[12px] mb-5 lg:ml-1"
                             initial={{ opacity: 0, x: -10 }}
                             animate={{ opacity: 1, x: 0 }}
                             transition={{ delay: 0.30, duration: 0.55, ease: "easeOut" }}
@@ -119,7 +134,7 @@ export default function Hero() {
                                 aria-hidden="true"
                             />
                             <AnimatedShinyText
-                                className="font-dm text-[10px] font-semibold uppercase tracking-[0.22em] text-[#2ECC52]"
+                                className="font-dm text-[10px] font-semibold uppercase tracking-[0.22em] text-[#2ECC52] !ml-0 !mr-0"
                             >
                                 HONGASANDRA & AKSHAYANAGAR
                             </AnimatedShinyText>
@@ -196,6 +211,10 @@ export default function Hero() {
                             />
                         </motion.div>
 
+                        <div className="flex w-full justify-center lg:justify-start mb-4">
+                            <OfferHeroPill />
+                        </div>
+
                         <motion.div
                             initial={{ opacity: 0, y: 10 }}
                             animate={{ opacity: 1, y: 0 }}
@@ -221,38 +240,7 @@ export default function Hero() {
                 )}
             </div>
 
-            {mounted && (
-                <motion.div
-                    className="absolute right-8 top-[33%] hidden lg:flex flex-col gap-3 z-10"
-                    initial="initial"
-                    animate="animate"
-                    aria-label="RS Fitness highlights"
-                >
-                    {statPills.map((pill, i) => (
-                        <motion.div
-                            key={pill}
-                            className="flex items-center gap-2"
-                            initial={{ opacity: 0, x: 12 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            transition={{ delay: 2.4 + i * 0.12, duration: 0.5, ease: "easeOut" }}
-                        >
-                            <span
-                                className="text-[#2ECC52]"
-                                style={{ fontSize: "7px", lineHeight: 1 }}
-                                aria-hidden="true"
-                            >
-                                ●
-                            </span>
-                            <span
-                                className="font-dm text-[11px] font-medium uppercase tracking-[0.14em] text-[rgba(245,245,245,0.65)]"
-                                style={{ fontFamily: "var(--font-dm-sans)" }}
-                            >
-                                {pill}
-                            </span>
-                        </motion.div>
-                    ))}
-                </motion.div>
-            )}
+
 
             {mounted && !isSmallHeight && (
                 <motion.div
@@ -273,6 +261,56 @@ export default function Hero() {
                         SCROLL
                     </span>
                 </motion.div>
+            )}
+
+            {!isMobile && mounted && (
+                <div className="absolute right-[8vw] xl:right-[12vw] top-[50%] -translate-y-[55%] flex flex-col items-center gap-12 z-[8]">
+                    <motion.div
+                        initial={{ opacity: 0, x: 40, filter: "blur(10px)" }}
+                        animate={{ opacity: 1, x: 0, filter: "blur(0px)" }}
+                        transition={{ delay: 1.0, duration: 1.0, ease: "easeOut" }}
+                    >
+                        <Image 
+                            src="/images/RSFitness-Logo.png" 
+                            alt="RS Fitness Logo" 
+                            width={700} 
+                            height={250} 
+                            className="object-contain w-[380px] lg:w-[500px] xl:w-[700px] h-auto drop-shadow-[0_0_40px_rgba(46,204,82,0.15)] opacity-90"
+                            priority
+                        />
+                    </motion.div>
+
+                    <motion.div
+                        className="flex flex-row flex-wrap justify-center items-center gap-4 lg:gap-6 bg-[rgba(255,255,255,0.03)] backdrop-blur-md border border-[rgba(255,255,255,0.08)] px-6 py-3.5 rounded-full drop-shadow-[0_4px_20px_rgba(0,0,0,0.5)]"
+                        initial="initial"
+                        animate="animate"
+                        aria-label="RS Fitness highlights"
+                    >
+                        {statPills.map((pill, i) => (
+                            <motion.div
+                                key={pill}
+                                className="flex items-center gap-2.5"
+                                initial={{ opacity: 0, y: 12 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: 2.0 + i * 0.12, duration: 0.5, ease: "easeOut" }}
+                            >
+                                <span
+                                    className="text-[#2ECC52]"
+                                    style={{ fontSize: "8px", lineHeight: 1 }}
+                                    aria-hidden="true"
+                                >
+                                    ●
+                                </span>
+                                <span
+                                    className="font-dm text-[12px] xl:text-[13px] font-medium uppercase tracking-[0.16em] text-[rgba(245,245,245,0.7)]"
+                                    style={{ fontFamily: "var(--font-dm-sans)" }}
+                                >
+                                    {pill}
+                                </span>
+                            </motion.div>
+                        ))}
+                    </motion.div>
+                </div>
             )}
         </section>
     );

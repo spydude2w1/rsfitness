@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import Image from "next/image";
 import { ScrollVelocityContainer, ScrollVelocityRow } from "@/components/ui/scroll-based-velocity";
 import { ScrollProgress } from "@/components/ui/scroll-progress";
 
@@ -39,9 +40,8 @@ export default function Footer() {
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-10">
                         {/* Brand */}
                         <div className="col-span-2 md:col-span-1">
-                            <div className="flex items-center gap-1 mb-3">
-                                <span className="text-[#2ECC52] text-[9px]">●</span>
-                                <span className="text-[26px] text-[#F5F5F5] tracking-wide" style={{ fontFamily: "var(--font-bebas-neue)" }}>RS FITNESS</span>
+                            <div className="flex items-center mb-4">
+                                <Image src="/images/RSFitness-Logo.png" alt="RS Fitness Logo" width={200} height={60} className="object-contain h-[48px] w-auto" />
                             </div>
                             <p className="text-[13px] text-[rgba(245,245,245,0.50)] mb-1">Train Hard. Live Strong.</p>
                             <p className="text-[12px] text-[rgba(245,245,245,0.30)]">Hongasandra & Akshayanagar, Bangalore</p>

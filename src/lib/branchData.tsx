@@ -25,7 +25,7 @@ export const branches = [
         facilities: ["Free Weights & Machines", "Certified Personal Trainers", "RS Cafe On-Site", "Changing Rooms"],
         isNew: false,
         mapsUrl: "https://maps.google.com/?q=RS+Fitness+Hongasandra+Bangalore",
-        image: "/images/hongasandra-branch.jpg",
+        image: "/images/hongasandra-branch/main.webp",
         amenities: [
             { icon: <Icons.Shower />, label: "Changing Rooms" },
             { icon: <Icons.Lock />, label: "Secure Lockers" },
@@ -72,7 +72,7 @@ export const branches = [
         facilities: ["Free Weights & Machines", "Certified Personal Trainers", "Modern Equipment", "Changing Rooms"],
         isNew: true,
         mapsUrl: "https://maps.google.com/?q=RS+Fitness+Akshayanagar+Bangalore",
-        image: "/images/akshayanagar-branch.jpg",
+        image: "/images/akshayanagar-branch/main.webp",
         amenities: [
             { icon: <Icons.Shower />, label: "Changing Rooms" },
             { icon: <Icons.Lock />, label: "Secure Lockers" },

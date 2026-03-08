@@ -5,8 +5,8 @@ import { fadeUp, fadeUpTransition } from "@/lib/motion";
 
 const stats = [
     { value: 2, suffix: "", label: "GYM BRANCHES" },
-    { value: 100, suffix: "+", label: "ACTIVE MEMBERS" },
-    { value: 5, suffix: "+", label: "CERTIFIED TRAINERS" },
+    { value: 150, suffix: "+", label: "ACTIVE MEMBERS" },
+    { value: 10, suffix: "+", label: "CERTIFIED TRAINERS" },
     { value: 1, suffix: "", label: "RS CAFE ON-SITE" },
 ];
 

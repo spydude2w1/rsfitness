@@ -1,11 +1,12 @@
 "use client";
-import { useState, FormEvent } from "react";
+import { useState, FormEvent, useEffect } from "react";
 import { motion } from "motion/react";
 import { ShimmerButton } from "@/components/ui/shimmer-button";
 import { PulsatingButton } from "@/components/ui/pulsating-button";
 import { AnimatedGridPattern } from "@/components/ui/animated-grid-pattern";
 import { AnimatedShinyText } from "@/components/ui/animated-shiny-text";
 import { BlurFade } from "@/components/ui/blur-fade";
+import { OFFER } from "@/lib/offerConfig";
 
 type Status = "idle" | "loading" | "success" | "error";
 
@@ -17,6 +18,26 @@ export default function ContactForm() {
     const [message, setMessage] = useState("");
     const [status, setStatus] = useState<Status>("idle");
     const [errors, setErrors] = useState<Record<string, string>>({});
+    const [offerActivated, setOfferActivated] = useState(false);
+    const [offerSource, setOfferSource] = useState<string>("");
+
+    useEffect(() => {
+        const handler = (e: Event) => {
+            const detail = (e as CustomEvent).detail;
+            if (detail.branch === "akshayanagar") {
+                setBranch("akshayanagar");
+                setOfferActivated(true);
+                setOfferSource(detail.source);
+                setTimeout(() => {
+                    document.getElementById("contact")?.scrollIntoView({
+                        behavior: "smooth", block: "start"
+                    });
+                }, 100);
+            }
+        };
+        window.addEventListener("offer-cta-click", handler);
+        return () => window.removeEventListener("offer-cta-click", handler);
+    }, []);
 
     const toggleInterest = (i: string) => setInterests((p) => p.includes(i) ? p.filter((x) => x !== i) : [...p, i]);
 
@@ -47,7 +68,35 @@ export default function ContactForm() {
                 </div>
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-0">
                     <div className="lg:col-span-7 lg:pr-10">
+                        {offerActivated && !OFFER.isClosed && (
+                            <motion.div
+                                initial={{ opacity: 0, y: -8 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.4, ease: "easeOut" }}
+                                className="flex items-center gap-3 p-4 rounded-[2px] mb-6"
+                                style={{
+                                    background: "rgba(46,204,82,0.08)",
+                                    border: "1px solid rgba(46,204,82,0.25)",
+                                }}
+                                role="status"
+                                aria-live="polite"
+                            >
+                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" className="flex-shrink-0" aria-hidden="true">
+                                    <circle cx="10" cy="10" r="9.5" stroke="#2ECC52" strokeWidth="1"/>
+                                    <path d="M6 10.5l3 3 5-6" stroke="#2ECC52" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                                </svg>
+                                <div>
+                                    <p className="font-dm text-[12px] font-semibold text-[#2ECC52] uppercase tracking-wider">
+                                        Founding Member Offer Applied
+                                    </p>
+                                    <p className="font-dm text-[12px] text-[rgba(245,245,245,0.60)] mt-0.5">
+                                        6 months for ₹2,999 · {OFFER.spotsRemaining} spots remaining · Akshayanagar branch pre-selected
+                                    </p>
+                                </div>
+                            </motion.div>
+                        )}
                         <form onSubmit={handleSubmit} className="space-y-5" noValidate>
+                            <input type="hidden" name="offer" value={offerActivated ? "founding-member-akshayanagar" : ""} />
                             <div>
                                 <label htmlFor="name" className="block text-[12px] uppercase tracking-[0.12em] text-[rgba(245,245,245,0.55)] mb-2">Full Name *</label>
                                 <input id="name" type="text" value={name} onChange={(e) => setName(e.target.value)} className="w-full h-[48px] px-4 bg-[#141414] border border-[rgba(255,255,255,0.06)] rounded-[2px] text-[#F5F5F5] text-[15px] focus:border-[rgba(46,204,82,0.5)] focus:shadow-[0_0_0_3px_rgba(46,204,82,0.08)] focus:outline-none transition-all duration-200" required minLength={2} />

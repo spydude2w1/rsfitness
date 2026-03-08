@@ -4,10 +4,10 @@ export const metadata = {
 };
 
 const trainers = [
-    { name: "John Doe", specialty: "Strength & Conditioning", experience: "5 Years" },
-    { name: "Jane Smith", specialty: "Weight Loss & HIIT", experience: "4 Years" },
-    { name: "Mark Wilson", specialty: "Bodybuilding & Muscle Gain", experience: "6 Years" },
-    { name: "Sarah Connor", specialty: "Rehabilitation & Mobility", experience: "3 Years" },
+    { name: "Sanjay", specialty: "Strength & Conditioning", experience: "5 Years" },
+    { name: "Tarun", specialty: "Weight Loss & HIIT", experience: "4 Years" },
+    { name: "Lokesh", specialty: "Bodybuilding & Muscle Gain", experience: "6 Years" },
+    { name: "Roopesh", specialty: "Rehabilitation & Mobility", experience: "3 Years" },
 ];
 
 export default function TrainersPage() {

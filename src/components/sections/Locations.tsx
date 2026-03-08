@@ -1,5 +1,6 @@
 "use client";
 import Image from "next/image";
+import Link from "next/link";
 import { motion } from "motion/react";
 import { BlurFade } from "@/components/ui/blur-fade";
 import { AnimatedShinyText } from "@/components/ui/animated-shiny-text";
@@ -41,9 +42,12 @@ function LocationCard({ id, branch, label, address, phones, facilities, isNew, m
 
     const card = (
         <div className="bg-[#111111] border border-[rgba(255,255,255,0.06)] rounded-[2px] overflow-hidden hover:border-[rgba(46,204,82,0.25)] transition-all duration-200 flex flex-col h-full" aria-label={`RS Fitness ${branch} Branch`}>
-            <div className="relative aspect-video overflow-hidden shrink-0">
-                <Image src={image} alt={`RS Fitness ${branch} gym interior`} fill className="object-cover" sizes="(max-width: 1024px) 100vw, 50vw" />
-                <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-[#111111] to-transparent" />
+            <div className="relative aspect-video overflow-hidden shrink-0 group/img cursor-pointer">
+                <Image src={image} alt={`RS Fitness ${branch} gym interior`} fill className="object-cover transition-transform duration-500 group-hover/img:scale-105" sizes="(max-width: 1024px) 100vw, 50vw" />
+                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover/img:opacity-100 transition-opacity duration-300 flex items-center justify-center z-[5] pointer-events-none">
+                    <Link href={`/gallery?tab=${id}`} className="pointer-events-auto px-6 py-3 bg-[rgba(255,255,255,0.1)] backdrop-blur-md border border-[rgba(255,255,255,0.2)] text-[#F5F5F5] text-[13px] font-bold tracking-widest uppercase rounded-full hover:bg-[#2ECC52] hover:text-[#080808] hover:border-[#2ECC52] transition-all transform hover:scale-105">View Gym Gallery</Link>
+                </div>
+                <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-[#111111] to-transparent z-[2]" />
                 {isNew && <div className="absolute top-3 right-3 z-10"><AnimatedShinyText className="inline-flex items-center gap-1 px-3 py-1.5 bg-[rgba(8,8,8,0.8)] backdrop-blur-sm border border-[rgba(46,204,82,0.3)] rounded-[2px] text-[10px] font-semibold tracking-wider uppercase text-[#2ECC52]">✦ NEW · JANUARY 2025</AnimatedShinyText></div>}
             </div>
             <div className="flex-1 flex flex-col">

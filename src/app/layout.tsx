@@ -3,6 +3,8 @@ import { Bebas_Neue, DM_Sans } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import AnnouncementStrip from "@/components/ui/AnnouncementStrip";
+import FloatingOfferNotification from "@/components/ui/FloatingOfferNotification";
 
 const bebasNeue = Bebas_Neue({
   weight: "400",
@@ -28,19 +30,23 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "RS Fitness | Gym in Hongasandra & Akshayanagar, Bangalore",
+  title: "RS Fitness | Premium Gym in Hongasandra & Akshayanagar, Bangalore",
   description:
     "RS Fitness offers premium gym facilities with certified personal trainers in Hongasandra and Akshayanagar, Bangalore. Two branches, RS Cafe on-site, and flexible membership plans.",
   keywords: [
     "gym in Hongasandra",
     "gym in Akshayanagar",
+    "Premium gym in akshayanagar",
+    "Premium gym in hongasandra",
     "fitness center Bangalore",
     "personal trainer Bangalore south",
     "RS Fitness Bangalore",
     "gym with cafe Bangalore",
   ],
   icons: {
-    icon: "/favicon.jpg",
+    icon: "/favicon.ico",
+    shortcut: "/favicon.ico",
+    apple: "/favicon.ico",
   },
   openGraph: {
     title: "RS Fitness | Train Hard. Live Strong.",
@@ -84,9 +90,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         className="bg-[#080808] text-[#F5F5F5] antialiased w-full"
         style={{ fontFamily: "var(--font-dm-sans), sans-serif", overflowX: "hidden" }}
       >
+        <AnnouncementStrip />
         <Navbar />
         <main>{children}</main>
         <Footer />
+        <FloatingOfferNotification />
       </body>
     </html>
   );
