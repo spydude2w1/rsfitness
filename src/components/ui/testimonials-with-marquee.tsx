@@ -40,7 +40,17 @@ export function TestimonialsSection({
               {[...Array(4)].map((_, setIndex) => (
                 testimonials.map((testimonial, i) => (
                   <TestimonialCard 
-                    key={`${setIndex}-${i}`}
+                    key={`a-${setIndex}-${i}`}
+                    {...testimonial}
+                  />
+                ))
+              ))}
+            </div>
+            <div aria-hidden="true" className="flex shrink-0 justify-around [gap:var(--gap)] animate-marquee flex-row group-hover:[animation-play-state:paused]">
+              {[...Array(4)].map((_, setIndex) => (
+                testimonials.map((testimonial, i) => (
+                  <TestimonialCard 
+                    key={`b-${setIndex}-${i}`}
                     {...testimonial}
                   />
                 ))
