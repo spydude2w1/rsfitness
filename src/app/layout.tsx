@@ -5,6 +5,7 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import AnnouncementStrip from "@/components/ui/AnnouncementStrip";
 import FloatingOfferNotification from "@/components/ui/FloatingOfferNotification";
+import { Analytics } from "@vercel/analytics/next";
 
 const bebasNeue = Bebas_Neue({
   weight: "400",
@@ -95,6 +96,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <main>{children}</main>
         <Footer />
         <FloatingOfferNotification />
+        <Analytics />
       </body>
     </html>
   );
