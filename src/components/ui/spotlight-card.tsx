@@ -102,6 +102,17 @@ const GlowCard: React.FC<GlowCardProps> = ({
   };
 
   const beforeAfterStyles = `
+    @media (max-width: 1024px) {
+      [data-glow] {
+        background-image: none !important;
+      }
+      [data-glow]::before,
+      [data-glow]::after,
+      [data-glow] [data-glow] {
+        display: none !important;
+      }
+    }
+
     [data-glow]::before,
     [data-glow]::after {
       pointer-events: none;
